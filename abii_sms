@@ -1,0 +1,20 @@
+import africastalking
+# Testing environment
+# username = "sandbox"
+# api_key = "atsk_fea561d37bf2e51b1a10e79cddcd21d2a4d0c14c46a29bbb70111bdfe0a922d98a09a22e"  # ← use a valid sandbox key
+
+# Live environment
+username = "abiiclinic"
+api_key = "atsk_4631f13a9332ee8ec59a937138e8e6bcb1ab1c403b019b8b9b0417328d4abd0fa887ab2d"
+africastalking.initialize(username, api_key)
+
+sms = africastalking.SMS
+recipients = ["+256701443833"]
+message = "Hello from ABII Clinic! Your appointment reminder is being tested."
+sender_id ="ATTech"
+
+try:
+    response = sms.send(message, recipients, sender_id)  
+    print("Response:",response)
+except Exception as e:
+    print(f"Error: {e}")
