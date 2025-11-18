@@ -15,11 +15,27 @@ africastalking.initialize(username, api_key)
 sms = africastalking.SMS
 
 # Send test message
-recipients = ["+256782569360"]
-message = "Hello from ABII Clinic! Your appointment reminder is being tested."
+recipients = ["+256782569360","0726750061"]
 
-try:
-    response = sms.send(message, recipients, sender_id)
-    print("Response:", response)
-except Exception as e:
-    print(f"Error: {e}")
+
+# Separate valid +256 numbers and invalid ones
+valid_recipients = [p for p in recipients if p.startswith("+256")]
+invalid_recipients = [p for p in recipients if not p.startswith("+256")]
+
+# Log invalid numbers for review
+if invalid_recipients:
+    print("⚠ The following numbers are NOT Ugandan (+256) and were skipped:")
+    for num in invalid_recipients:
+        print(" -", num)
+
+if not valid_recipients:
+    print("No valid +256 (Uganda) numbers found. SMS not sent to avoid charges.")
+else:
+    message = "Hello from ABII Clinic! Your appointment reminder is being tested."
+    try:
+        response = sms.send(message, valid_recipients, sender_id)
+        print("Response:", response)
+    except Exception as e:
+        print(f"Error: {e}")
+
+
